@@ -218,15 +218,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Fireball, function (sprite, othe
     info.changeLifeBy(-2)
     otherSprite.destroy()
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
-    bee.destroy()
-    info.changeLifeBy(-1)
-    if (Hops_and_Paw.y == otherSprite.y) {
-        info.changeLifeBy(10)
-    } else {
-    	
-    }
-})
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile3, function (sprite, location) {
     game.over(false, effects.melt)
 })
@@ -238,9 +229,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     if (Hops_and_Paw.y < otherSprite.y) {
-        info.changeScoreBy(3)
+    	
     } else {
-        info.changeLifeBy(-1)
+    	
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (sprite, otherSprite) {
@@ -248,6 +239,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (sprite, otherSpr
     info.changeScoreBy(1)
 })
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location) {
+    current_level += 1
     if (9 == info.score()) {
         game.over(true, effects.confetti)
     }
@@ -319,7 +311,8 @@ let bee: Sprite = null
 let flower: Sprite = null
 let coin: Sprite = null
 let Hops_and_Paw: Sprite = null
-info.setLife(10)
+info.setScore(0)
+info.setLife(3)
 scene.setBackgroundColor(9)
 tiles.setTilemap(tiles.createTilemap(
             hex`320010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000400000000000000000000000000000000000001010101010100000000000000000000040500000000000000000000000000010000000000000000000000000000000000000000000000000005000000040000000101010100000000000000000000000000010100050004000200000000000000000000000000000001010101010101010000000000000000000000000000000000000000000001010101010000000000000000000000000000000000000000000000000000000000000400050000000000000000000500000000000000000000000000000000000000000000000000000000000000000000000001010101000000000004000001010101000000000000000000000000000000000000000000000000000000000000000000000000000000000500010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000101010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303`,
@@ -726,3 +719,23 @@ for (let value of tiles.getTilesByType(myTiles.tile5)) {
     tiles.placeOnTile(flower, value)
     tiles.setTileAt(value, myTiles.tile0)
 }
+game.onUpdate(function () {
+    Hops_and_Paw.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . f . . . 
+. . . . . . . . . . . . f f f . 
+. . . . . . . . . . . . f f 5 f 
+f f f f f f f f f f f f f f f f 
+. . . . . f f f f f f f f f . . 
+. . . . . f . f . . . f . f . . 
+. . . . . f . f . . . f . f . . 
+. . . . . f . f . . . f . f . . 
+`)
+})
